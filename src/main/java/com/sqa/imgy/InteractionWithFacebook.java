@@ -25,11 +25,12 @@ public class InteractionWithFacebook {
 	}
 
 	/**
+	 * @return
 	 *
 	 */
-	public void getFBID() {
+	public String getFBID() {
+		return "facebood id";
 		// TODO Auto-generated method stub
-
 	}
 
 	/**
@@ -37,11 +38,13 @@ public class InteractionWithFacebook {
 	 *
 	 */
 	public void importFriends(int maxToImport) {
+		boolean importMoreFriends = true;
 		goToFriendsList();
-		getNoOfFriends();
-		showMoreFriends();
-		storeFriendsInfoLoop();
-		printImportStatus();
+		while (importMoreFriends) {
+			importBatchOfFriends(maxToImport);
+			importMoreFriends = askIfImportNextBatch();
+		}
+		boolean success = printImportStatus();
 	}
 
 	/**
@@ -68,6 +71,14 @@ public class InteractionWithFacebook {
 	}
 
 	/**
+	 * @return
+	 */
+	private boolean askIfImportNextBatch() {
+		// TODO Auto-generated method stub
+		return false;
+	}
+
+	/**
 	 *
 	 */
 	private void getNoOfFriends() {
@@ -84,6 +95,20 @@ public class InteractionWithFacebook {
 	}
 
 	/**
+	 * @param maxToImport
+	 */
+	private boolean importBatchOfFriends(int maxToImport) {
+		// get total
+		// while # of friends < total:
+		// while visible
+		// Each friend: get info, store to DB
+		// info: name, city, dob, phone #, email, aim, skype
+		// scroll to next section
+		// return success or not
+		return true;
+	}
+
+	/**
 	 *
 	 */
 	private void logout() {
@@ -92,9 +117,11 @@ public class InteractionWithFacebook {
 	}
 
 	/**
+	 * @return
 	 *
 	 */
-	private void printImportStatus() {
+	private boolean printImportStatus() {
+		return false;
 		// TODO Auto-generated method stub
 
 	}
@@ -111,8 +138,7 @@ public class InteractionWithFacebook {
 	 *
 	 */
 	private void storeFriendsInfoLoop() {
-		writeToDBTable();
-
+		InteractionWithDBorFile.writeToDBTable();
 	}
 
 }

@@ -1,25 +1,22 @@
 package com.sqa.imgy;
 
+import java.sql.*;
+
 public class ContactsListFromFacebookApp {
 
-	public static void main(String[] args) {
+	static String FBID;
+
+	public static void main(String[] args) throws ClassNotFoundException, SQLException {
+
+		// How will the user name and password be passed in? It will need to be
+		// passed in to checkIfHasExistingContactList()
 		boolean needToWriteNewData = checkIfHasExistingContactList();
 		if (!needToWriteNewData) {
 			askUserImportViewSearch();
 		} else {
 			importHowMany();
 		}
-
-		// if no:
-		// new driver
-		// InteractionWithFacebook.import - pass max friends to add at a time or
-		// auto set to 0 (no limit)
-		// close driver
-
-		// while using exit = false, continue to ask. when user enters "exit" or
-		// "quit", quit app
-		// ask user if want to try importing more from fb or want to view/search
-		// list
+		System.exit(0);
 		// if IMPORT InteractionWithFacebook.import - pass max
 		// if VIEW: print whole list loop through if fields != "", then print
 		// if SEARCH: prompt: enter last name or part of last name string
@@ -29,20 +26,22 @@ public class ContactsListFromFacebookApp {
 		// *later: how to deal with accented characters
 		// print results then press enter to continue
 
-		// exit
 	}
 
 	/**
+	 * @throws SQLException
+	 * @throws ClassNotFoundException
 	 *
 	 */
-	private static void askUserImportViewSearch() {
+	private static void askUserImportViewSearch() throws ClassNotFoundException, SQLException {
 		boolean exit = false;
-		// while (!exit){
-		// Ask User what they want to do
-		// call : importHowMany()
-		// or: viewHowMany()}
-		System.exit(0);
-
+		while (!exit) {
+			// Ask User what they want to do and call one of these:
+			importHowMany();
+			viewHowMany();
+			searchForContact();
+		}
+		// once exit = true - ends the method and goes back to main for exit
 	}
 
 	/**
@@ -53,22 +52,18 @@ public class ContactsListFromFacebookApp {
 		return 0;
 	}
 
-	private static boolean checkIfHasExistingContactList() {
+	// How will the user name and password be passed in? It will need to be
+	// passed in to checkIfHasExistingContactList()
+	// temporarily hard-coded
+	private static boolean checkIfHasExistingContactList() throws ClassNotFoundException, SQLException {
 		boolean needToWriteNewData = true;
-		boolean tableFound;
 		int numOfEntries = 0;
 		InteractionWithFacebook firstInteractionToCheckForContacts = new InteractionWithFacebook(
 				"https://www.facebook.com/", "gyakovenko@yahoo.com", "1shaGalin@");
 		firstInteractionToCheckForContacts.login();
-		firstInteractionToCheckForContacts.getFBID();
+		FBID = firstInteractionToCheckForContacts.getFBID();
 		firstInteractionToCheckForContacts.tearDown();
-		tableFound = InteractionWithDBorFile.checkIfTableExists();
-		if (tableFound) {
-			numOfEntries = InteractionWithDBorFile.findNumberOfEntries();
-			informUserIfTablesFound(tableFound, numOfEntries);
-		} else {
-			informUserIfTablesFound(tableFound);
-		}
+		numOfEntries = InteractionWithDBorFile.checkIfTableExists(FBID);
 		if (numOfEntries != 0) {
 			needToWriteNewData = false;
 		}
@@ -77,13 +72,15 @@ public class ContactsListFromFacebookApp {
 	}
 
 	/**
+	 * @throws SQLException
+	 * @throws ClassNotFoundException
 	 *
 	 */
-	private static void importHowMany() {
+	private static void importHowMany() throws ClassNotFoundException, SQLException {
 		int maxToImport = askUserMaxToImport();
-		InteractionWithFacebook importInteractionToCheckForContacts = new InteractionWithFacebook(
-				"https://www.facebook.com/", "gyakovenko@yahoo.com", "1shaGalin@");
-		importInteractionToCheckForContacts.importFriends(maxToImport);
+		InteractionWithFacebook importInteraction = new InteractionWithFacebook("https://www.facebook.com/",
+				"gyakovenko@yahoo.com", "1shaGalin@");
+		importInteraction.importFriends(maxToImport);
 
 		askUserImportViewSearch();
 	}
@@ -104,16 +101,30 @@ public class ContactsListFromFacebookApp {
 	/**
 	 *
 	 */
-	private static void searchForWhatString() {
+	private static void searchForContact() {
+		// TODO Auto-generated method stub
+
+	}
+
+	/**
+	 * @throws SQLException
+	 * @throws ClassNotFoundException
+	 *
+	 */
+	private static void searchForWhatString() throws ClassNotFoundException, SQLException {
 		// TODO Auto-generated method stub
 		askUserImportViewSearch();
 	}
 
 	/**
+	 * @throws SQLException
+	 * @throws ClassNotFoundException
 	 *
 	 */
-	private static void viewHowMany() {
-		InteractionWithDBorFile.searchTable();
+	private static void viewHowMany() throws ClassNotFoundException, SQLException {
+		// ask user max how many to view
+		int maxView = 10;
+		InteractionWithDBorFile.searchTable("FBID", "SQL Statement", maxView);
 		askUserImportViewSearch();
 	}
 
