@@ -48,14 +48,14 @@ public class InteractionWithDBorFile {
 	}
 
 	public void BasicTest() throws ClassNotFoundException, SQLException {
-		// must be in pom to not get class error
 		Class.forName("com.mysql.jdbc.Driver");
-		// create connection to db.
-		Connection dbconn = DriverManager.getConnection("jdbc:mysql://localhost:8889/sqldb", "root", "root");
-		// you need a statement variable into which to store the statement
+		Connection dbconn = DriverManager.getConnection("jdbc:mysql://localhost:8889/fbContactsD", "root", "root");
+		// initiated connection to DB
+
+		// specific to methods
 		Statement stmt = dbconn.createStatement();
-		// retrieve a result set by executing query
-		ResultSet rs = stmt.executeQuery("select id, user, pass from sqldb");
+		// here's my sql statement
+		ResultSet rs = stmt.executeQuery("select id, user, pass from tablename");
 		// rs.getMetaData().getColumnCount(); if you dont know how many
 		while (rs.next()) {
 			// You can call by the name of the column or
@@ -67,6 +67,9 @@ public class InteractionWithDBorFile {
 		}
 		rs.close();
 		stmt.close();
+		// ends specific to methods
+
+		// closes connnection
 		dbconn.close();
 	}
 

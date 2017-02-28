@@ -33,11 +33,15 @@ public class InteractionWithFacebook {
 	}
 
 	/**
+	 * @param maxToImport
 	 *
 	 */
-	public void importFriends() {
-		// TODO Auto-generated method stub
-
+	public void importFriends(int maxToImport) {
+		goToFriendsList();
+		getNoOfFriends();
+		showMoreFriends();
+		storeFriendsInfoLoop();
+		printImportStatus();
 	}
 
 	/**
@@ -66,8 +70,48 @@ public class InteractionWithFacebook {
 	/**
 	 *
 	 */
+	private void getNoOfFriends() {
+		// TODO Auto-generated method stub
+
+	}
+
+	/**
+	 *
+	 */
+	private void goToFriendsList() {
+		// TODO Auto-generated method stub
+
+	}
+
+	/**
+	 *
+	 */
 	private void logout() {
 		// TODO Auto-generated method stub
+
+	}
+
+	/**
+	 *
+	 */
+	private void printImportStatus() {
+		// TODO Auto-generated method stub
+
+	}
+
+	/**
+	 *
+	 */
+	private void showMoreFriends() {
+		// TODO Auto-generated method stub
+
+	}
+
+	/**
+	 *
+	 */
+	private void storeFriendsInfoLoop() {
+		writeToDBTable();
 
 	}
 

@@ -45,6 +45,14 @@ public class ContactsListFromFacebookApp {
 
 	}
 
+	/**
+	 * @return
+	 */
+	private static int askUserMaxToImport() {
+		// TODO Auto-generated method stub
+		return 0;
+	}
+
 	private static boolean checkIfHasExistingContactList() {
 		boolean needToWriteNewData = true;
 		boolean tableFound;
@@ -72,9 +80,11 @@ public class ContactsListFromFacebookApp {
 	 *
 	 */
 	private static void importHowMany() {
+		int maxToImport = askUserMaxToImport();
 		InteractionWithFacebook importInteractionToCheckForContacts = new InteractionWithFacebook(
 				"https://www.facebook.com/", "gyakovenko@yahoo.com", "1shaGalin@");
-		importInteractionToCheckForContacts.importFriends();
+		importInteractionToCheckForContacts.importFriends(maxToImport);
+
 		askUserImportViewSearch();
 	}
 
